@@ -1,18 +1,22 @@
-from flask import Flask
+from flask import Flask, redirect
 from src.routes.products_routes import products
-
-
+from src.routes.categories_routes import categories
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///model/sqlite/db/tasks.db'
-#db = SQLAlchemy(app)
-
+URL_PREFIX = '/api/v1'
 def init_app():
     #configuration
-    #app.config.from_object(config)
+ 
+
+    #redireccion a documentación
+    @app.route("/")
+    def go_to_documentation():
+     return redirect('/api/docs')
 
     #blueprints
-    app.register_blueprint(products)
+
+    app.register_blueprint(products, url_prefix=URL_PREFIX+'/products/')
+    app.register_blueprint(categories, url_prefix=URL_PREFIX+'/categories/')
 
     return app

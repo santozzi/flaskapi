@@ -1,0 +1,547 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Proyecto para la materia programación II de la UTN que simula un carrito de compras",
+        "version": "1.0.0",
+        "title": "UTN - Proyecto programación II",
+        "termsOfService": "/",
+        "contact": {
+            "email": "santozzi@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "127.0.0.1:4000",
+    "basePath": "/api/v1",
+    
+    "tags": [
+        {
+            "name": "Productos",
+            "description": "Productos de la tienda",
+            "externalDocs": {
+                "description": "Buscar más info",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "Categorías",
+            "description": "Categorías de los productos de la tienda",
+            "externalDocs": {
+                "description": "Buscar más info",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "schemes": [
+    
+        "http"
+    ],
+    "paths": {
+
+        "/products": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Lista de productos",
+                "description": "Devuelve la lista completa de productos registrados",
+                "operationId": "findPetsByStatus",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+               
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Product"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "No se encuentra la página"
+                    }
+                }
+                
+            },
+            "post": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Agregar un nuevo producto",
+                "description": "",
+                "operationId": "addProduct",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Modelo de abjeto para agregar un nuevo producto",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+           
+            }
+        },
+        "/products/{productId}": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Buscar un producto por ID",
+                "description": "Retorna un objeto producto",
+                "operationId": "productId",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "ID del producto a buscar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación completada",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    },
+                    "400": {
+                        "description": "No se encuentra el producto"
+                    },
+                    "404": {
+                        "description": "Página no encotrada"
+                    }
+                }
+            },
+           
+            "delete": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Borrar producto por id",
+                "description": "Borra un producto de la lista",
+                "operationId": "deleteProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Id del producto a borrar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Id no valido"
+                    },
+                    "404": {
+                        "description": "Página no encotrada"
+                    }
+                }
+            }
+            ,
+            "put": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Actualizar un producto existente",
+                "description": "",
+                "operationId": "updatePet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Id del producto a borrar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Modelo de abjeto para editar un producto existente",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Id no valido"
+                    },
+                    "404": {
+                        "description": "Página no encotrada"
+                    }
+                }
+            }
+            ,
+            "post": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Agregar una nueva imágen a un producto",
+                "description": "",
+                "operationId": "addUrlImage",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Id del producto a borrar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Modelo del objeto url para agregar una nueva imágen a un producto",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ProductImage"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+           
+            }
+            
+           
+           
+        },
+        "/products/{productId}/{image_pos}":{
+            "delete": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Borrar una imágen de un producto",
+                "description": "Borrar una imágen de un producto, con el id del producto y la posición de la imágen",
+                "operationId": "deleteImageProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Id del producto a borrar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "name": "image_pos",
+                        "in": "path",
+                        "description": "Posición de la imágen a borrar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Id no valido"
+                    },
+                    "404": {
+                        "description": "Página no encotrada"
+                    }
+                }
+            }
+        }
+        ,
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Lista de categorías",
+                "description": "Devuelve la lista completa de categorías registradas",
+                "operationId": "findCategoryId",
+                "produces": [
+                    "application/json"
+                ],
+               
+                "responses": {
+                    "200": {
+                        "description": "Operación completada",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Category"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "No se encuentra la página"
+                    }
+                }
+                
+            },
+            "post": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Agregar una nueva categoría",
+                "description": "",
+                "operationId": "addCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Modelo de abjeto para agregar una nueva categoría",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+           
+            }
+        },
+        "/categories/{categoryId}": {
+            "get": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Buscar una categoría por ID",
+                "description": "Retorna un objeto categría",
+                "operationId": "categoryId",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "description": "ID de la categoría a buscar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación completada",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "400": {
+                        "description": "No se encuentra la categoría"
+                    },
+                    "404": {
+                        "description": "Página no encotrada"
+                    }
+                }
+            },
+           
+            "delete": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Borrar categoría por id",
+                "description": "Borra una categoría de la lista",
+                "operationId": "deleteCategory",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "description": "Id de la categoría a borrar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Id no valido"
+                    },
+                    "404": {
+                        "description": "Página no encotrada"
+                    }
+                }
+            }
+            ,
+            "put": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Actualizar una categoría existente",
+                "description": "",
+                "operationId": "updatecategoría",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "description": "Id de la categoría a borrar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Modelo de abjeto para editar una categoría existente",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Id no valido"
+                    },
+                    "404": {
+                        "description": "Página no encotrada"
+                    }
+                }
+            }
+            
+            
+            
+           
+           
+        }
+       
+
+    },
+
+    "definitions": {
+        "Category":{
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Technology"
+                }
+            }
+        },
+        "Product": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+
+
+                "name": {
+                    "type": "string",
+                    "example": "Computadora"
+                },
+                "photoUrls": {
+                    "type": "array",
+                 
+                    "items": {
+                        "type": "string",
+                        "example": "https://www.tecnologia-informatica.com/wp-content/uploads/2018/08/caracteristicas-de-las-computadoras-1.jpeg"
+                        
+                    }
+                },
+                "category": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "price": {
+                    "type": "float",
+                    "example": 100.00
+                    
+                },
+                "quantity": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1
+                }
+            }
+        },
+        "ProductImage":{
+            "type": "object",
+            "required": [
+                "url"
+            ],
+            "properties": {
+
+
+                "url": {
+                    "type": "string",
+                    "example": "https://www.tecnologia-informatica.com/wp-content/uploads/2018/08/caracteristicas-de-las-computadoras-1.jpeg"
+                }
+           
+        }
+    }
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}

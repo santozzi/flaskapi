@@ -1,4 +1,4 @@
-from src.models.local.products_model import *
+from src.models.local.categories_model import *
 
                               
 def init():
@@ -10,11 +10,11 @@ def find_all():
 def find_by_id(id:int):
     return find_by_id_model(id)
 
-def add(product):
-    return add_model(product)
+def add(category):
+    return add_model(category)
 
-def update(producto,id):
-    return update_model(producto,id)
+def update(category,id):
+    return update_model(category,id)
 
 def delete(id):
     return delete_model(id)
